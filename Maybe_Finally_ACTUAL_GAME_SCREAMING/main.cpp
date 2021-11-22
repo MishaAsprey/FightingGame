@@ -1,8 +1,6 @@
 #include <iostream>
 #include <SDL.h>
 
-#include <vector>
-
 #include "Window.h"
 #include "Hero.h"
 #include "Knight.h"
@@ -28,13 +26,15 @@ int gameLoop(int argc, char** argv)
 	Samurai samurai(window.getWidth() - 600, window.getHeight() - 550, "Assets/samurai.png");
 
 	Player playerOne(200, 200, "Assets/knight.png");
+	Player playerTwo(600, 100, "Assets/samurai.png");
 
 	window.setWindowTexture("Assets/backgroundGameScene1.png");
 
 	int kSaveEvent = knight.getEventID();
 	int sSaveEvent = samurai.getEventID();
 
-	int pOneSaveEvent = playerOne.getEventID();
+	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
+	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
 	int sInitial = 0; //120;
 
@@ -57,14 +57,18 @@ int gameLoop(int argc, char** argv)
 		samurai.move(window);
 		samurai.draw(sx);
 
-		playerOne.move(window);
+		playerOne.move(window, 0);
 		playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
+
+		playerTwo.move(window, 1);
+		playerTwo.drawSamurai(sx, pTwoSaveEvent, sAnimDel);
 
 		//playerOne.draw(sx);
 		//playerOne.move(window);
 
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);
+			playerTwo.pollEventsP2(event);
 
 			knight.pollEvents(event);
 			samurai.pollEvents(event);
@@ -152,6 +156,7 @@ int gameLoop(int argc, char** argv)
 	knight.~Knight();
 	samurai.~Samurai();
 	playerOne.~Player();
+	playerTwo.~Player();
 
 	return 0;
 }

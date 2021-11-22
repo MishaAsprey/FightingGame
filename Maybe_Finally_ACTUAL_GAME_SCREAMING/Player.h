@@ -14,12 +14,12 @@ public:
 
 	void draw(int x, int character);
 
-	void drawKnight(int &x, int &saveEvent, int &kAnimDel);
-	void drawSamurai(int x);
+	void drawKnight(int &x, int &saveEvent, int &animDelay);
+	void drawSamurai(int &x, int &saveEvent, int &animDelay);
 
 	void pollEventsP1(SDL_Event &event);
 	void pollEventsP2(SDL_Event &event);
-	void move(Window &window);
+	void move(Window &window, int character);
 
 	inline int getXpos() const { return _xPos; }
 	inline bool isRunning() const { return _running; }

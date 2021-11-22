@@ -21,14 +21,14 @@ Player::~Player()
 //		drawSamurai(x);
 //}
 
-void Player::drawKnight(int &x, int &saveEvent, int &kAnimDel)
+void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 {
 	if (saveEvent != getEventID()) {
 		x = 60;
 		saveEvent = getEventID();
 	}
 
-	if (kAnimDel >= 5) { //animation delay for knight
+	if (animDelay >= 5) { //animation delay for knight
 		x += 180;
 
 		int limit = 1800;
@@ -40,7 +40,7 @@ void Player::drawKnight(int &x, int &saveEvent, int &kAnimDel)
 		if (x >= limit) {
 			x = 60; //90-21
 		}
-		kAnimDel = 0;
+		animDelay = 0;
 	}
 
 	_running = false;
@@ -59,8 +59,29 @@ void Player::drawKnight(int &x, int &saveEvent, int &kAnimDel)
 	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
-void Player::drawSamurai(int x)
+void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 {
+	int initial = 0; //initial x position for the Samurai sprite
+
+	if (saveEvent != getEventID()) {
+		x = initial;
+		saveEvent = getEventID();
+	}
+
+	if (animDelay >= 8) { //animation delay for knight
+		x += 200;
+
+		int limit = 800;
+		if (isRunning())
+			limit = 1600;
+		else if (attack())
+			limit = 800;
+
+		if (x >= limit)
+			x = initial; //90-21
+		animDelay = 0;
+	}
+
 	_running = false;
 	int y = 0;
 
@@ -128,9 +149,17 @@ void Player::pollEventsP2(SDL_Event &event)
 	}
 }
 
-void Player::move(Window &window)
+void Player::move(Window &window, int character)
 {
+	int rightWall = window.getWidth() - _w;
+	int leftWall = 0;
+	
+	if (character == 1) {
+		rightWall = window.getWidth() - 400;
+		leftWall = -200;
+	}
+
 	_xPos += _velx;
-	if (_xPos >= window.getWidth() - _w || _xPos <= 0)
+	if (_xPos >= rightWall || _xPos <= leftWall)
 		_xPos -= _velx;
 }
