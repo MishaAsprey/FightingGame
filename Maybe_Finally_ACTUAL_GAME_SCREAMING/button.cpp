@@ -26,9 +26,8 @@ bool Button::pollEvents(SDL_Event &event)
 			_overButton = false;
 		break;
 	case SDL_MOUSEBUTTONDOWN:
-		if (_overButton) {
+		if (_overButton)
 			return true;
-		}
 
 	default:
 		break;

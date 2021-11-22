@@ -15,21 +15,17 @@ Hero::Hero(int x, int y, int w, int h, const char * texture)
 {
 	auto surface = IMG_Load(texture);
 
-	if (!surface) {
+	if (!surface)
 		std::cout << "Hero: Failed to create surface" << std::endl;
-	}
-	else {
+	else
 		std::cout << "Hero: Surface created" << std::endl;
-	}
 	
 	_texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
 
-	if (!_texture) {
+	if (!_texture)
 		std::cout << "Hero: Failed to create texture" << std::endl;
-	}
-	else {
+	else
 		std::cout << "Hero: Texture created" << std::endl;
-	}
 
 	SDL_FreeSurface(surface);
 }
@@ -49,15 +45,12 @@ void Hero::pollEvents(SDL_Event &event)
 {
 	const Uint8 * keyState = SDL_GetKeyboardState(NULL);
 
-	if (keyState[SDL_SCANCODE_D]) {
+	if (keyState[SDL_SCANCODE_D])
 		_velx = 7;
-	}
-	else if (keyState[SDL_SCANCODE_A]) {
+	else if (keyState[SDL_SCANCODE_A])
 		_velx = -7;
-	}
-	else {
+	else
 		_velx = 0;
-	}
 
 	SDL_PumpEvents();
 }
@@ -65,7 +58,6 @@ void Hero::pollEvents(SDL_Event &event)
 void Hero::move()
 {
 	_x += _velx;
-	if (_x >= 800 - _w || _x <= 0) {
+	if (_x >= 800 - _w || _x <= 0)
 		_x -= _velx;
-	}
 }

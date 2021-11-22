@@ -6,7 +6,7 @@
 class Window
 {
 public:
-	Window(const char * title, int width, int height);//, const char * texture);
+	Window(const char * title, int width, int height);
 	~Window();
 
 	enum class CurrWindow {

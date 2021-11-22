@@ -63,7 +63,6 @@ void Knight::draw(int x)
 void Knight::move(Window &window)
 {
 	_kPosX += _velx;
-	if (_kPosX >= window.getWidth() - _w || _kPosX <= 0) {
+	if (_kPosX >= window.getWidth() - _w || _kPosX <= 0)
 		_kPosX -= _velx;
-	}
 }

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL.h>
 
+#include <vector>
+
 #include "Window.h"
 #include "Hero.h"
 #include "Knight.h"
@@ -9,22 +11,7 @@
 
 SDL_Event event;
 
-Window window("DEMO", 1920, 1080);//, "Assets/backgroundMenu.png");
-
-//void pollEvents(Window &window, Knight &knight, Samurai &samurai,
-//	Button &buttonStart, Button &buttonHelp)
-//{
-//	SDL_Event event;
-//
-//	if (SDL_PollEvent(&event)) {
-//		window.pollEvents(event);
-//		//hero.pollEvents(event);
-//		knight.pollEvents(event);
-//		samurai.pollEvents(event);
-//		buttonStart.pollEvents(event);
-//		buttonHelp.pollEvents(event);
-//	}
-//}
+Window window("DEMO", 1920, 1080);
 
 int mainMenu(int argc, char** argv); //forward declaration
 
@@ -36,11 +23,9 @@ int gameLoop(int argc, char** argv)
 	Uint32 frameStart;
 	int frameTime;
 
-	//Window window("DEMO", 1920, 1080);
-
-	//Hero hero(200, 200, 128, 128, "Assets/samurai_idle_1.png");
 	Knight knight(200, window.getHeight() - 350, "Assets/knight.png");
 	Samurai samurai(window.getWidth() - 600, window.getHeight() - 550, "Assets/samurai.png");
+
 	window.setWindowTexture("Assets/backgroundGameScene1.png");
 
 	int kSaveEvent = knight.getEventID();
@@ -59,17 +44,19 @@ int gameLoop(int argc, char** argv)
 		//	mainMenu(argc, argv, window);
 		//}
 
-		//mainMenu(argc, argv, window);
-
 		frameStart = SDL_GetTicks();
 
 		window.draw();
 		knight.move(window);
 		knight.draw(kx);
 		samurai.move(window);
-		samurai.draw(sx); //replace with another x;
-		
+		samurai.draw(sx);
+
+		//playerOne.draw(sx);
+		//playerOne.move(window);
+
 		if (SDL_PollEvent(&event)) {
+			//playerOne.pollEvents(event);
 			knight.pollEvents(event);
 			samurai.pollEvents(event);
 			window.pollEvents(event);
@@ -92,7 +79,7 @@ int gameLoop(int argc, char** argv)
 			kSaveEvent = knight.getEventID();
 		}
 
-		if (kAnimDel >= 5) { //delay animation //knight
+		if (kAnimDel >= 5) { //animation delay for knight
 			kx += 180;
 
 			int limit = 1800;
@@ -112,7 +99,7 @@ int gameLoop(int argc, char** argv)
 			sSaveEvent = samurai.getEventID();
 		}
 
-		if (sAnimDel >= 8) { //delay animation //knight
+		if (sAnimDel >= 8) { //animation delay for knight
 			sx += 200;
 
 			int limit = 800;
@@ -128,11 +115,74 @@ int gameLoop(int argc, char** argv)
 	}
 
 	window.~Window();
-	//hero.~Hero();
 	knight.~Knight();
 	samurai.~Samurai();
 
 	return 0;
+}
+
+//template <typename T>
+//T definePlayerOne(T character) {
+//	return character;
+//}
+
+int characterSelection(int argc, char** argv)
+{
+	const int FPS = 60;
+	const int frameDelay = 1000 / FPS;
+
+	Uint32 frameStart;
+	int frameTime;
+
+	int buttonCentrePos = window.getWidth() / 2 - 128;
+
+	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
+	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
+
+	Samurai test(200, 200, "Assets/samurai.png");
+
+	while (window.isRunning()) {
+		frameStart = SDL_GetTicks();
+
+		window.draw();
+
+		//SDL_Rect one { 500, 500, 200, 200 };
+		//SDL_Rect two { 800, 500, 200, 200 };
+		//SDL_RenderDrawRect(window.renderer, &one);
+		//SDL_RenderDrawRect(window.renderer, &two);
+		//SDL_RenderFillRect(window.renderer, &one);
+		//SDL_RenderFillRect(window.renderer, &two);
+
+		//playerOne = new Samurai(200, 200, "da");
+
+		//auto playerOne = definePlayerOne(new Knight(20, 20, "da"));
+
+		//auto playerOne = std::nullptr_t;
+
+
+		char1.draw();
+		char2.draw();
+
+		if (SDL_PollEvent(&event)) {
+			if (char1.pollEvents(event)) {
+				
+			}
+		}
+
+		window.clear();
+
+		frameTime = SDL_GetTicks() - frameStart;
+
+		if (frameDelay > frameTime)
+			SDL_Delay(frameDelay - frameTime);
+
+		SDL_Delay(1000);
+		char1.~Button();
+		char2.~Button();
+		return gameLoop(argc, argv);
+	}
+
+	return gameLoop(argc, argv);
 }
 
 int mainMenu(int argc, char** argv)
@@ -167,10 +217,6 @@ int mainMenu(int argc, char** argv)
 			SDL_Delay(frameDelay - frameTime);
 
 		if (SDL_PollEvent(&event)) {
-			//buttonStart.pollEvents(event);
-			//buttonHelp.pollEvents(event);
-			//buttonQuit.pollEvents(event);
-
 			if (buttonStart.pollEvents(event))
 				window.setCurWindow(Window::CurrWindow::game);
 			else if (buttonQuit.pollEvents(event))
@@ -185,7 +231,8 @@ int mainMenu(int argc, char** argv)
 	buttonHelp.~Button();
 	buttonQuit.~Button();
 
-	return gameLoop(argc, argv);
+	//return gameLoop(argc, argv);
+	return characterSelection(argc, argv);
 }
 
 int main(int argc, char** argv)

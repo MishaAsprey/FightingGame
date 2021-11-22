@@ -49,18 +49,6 @@ void Samurai::pollEvents(SDL_Event &event)
 
 void Samurai::draw(int x) const
 {
-	//_running = false;
-	//int y = 59; //90 - 30 - 15
-
-	//if (_velx != 0) {
-	//	y = 145 + 13; //160 - 15
-	//	_running = true;
-	//}
-	//else if (_attack) {
-	//	//x -= 30;
-	//	y = 273; //245
-	//}
-
 	_running = false;
 	int y = 0;
 

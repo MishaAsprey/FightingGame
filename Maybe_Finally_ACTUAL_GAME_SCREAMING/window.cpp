@@ -4,7 +4,7 @@
 
 SDL_Renderer * Window::renderer = nullptr;
 
-Window::Window(const char * title, int width, int height)//, const char * texture)
+Window::Window(const char * title, int width, int height)
 	: _title(title), _width(width), _height(height), _running(init()) {}
 
 Window::~Window()
