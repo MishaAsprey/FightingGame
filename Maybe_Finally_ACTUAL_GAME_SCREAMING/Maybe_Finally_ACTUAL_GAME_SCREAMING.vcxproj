@@ -155,6 +155,7 @@
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="knight.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="samurai.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Samurai.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

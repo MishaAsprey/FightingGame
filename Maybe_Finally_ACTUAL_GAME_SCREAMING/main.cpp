@@ -8,6 +8,7 @@
 #include "Knight.h"
 #include "Samurai.h"
 #include "Button.h"
+#include "Player.h"
 
 SDL_Event event;
 
@@ -26,10 +27,14 @@ int gameLoop(int argc, char** argv)
 	Knight knight(200, window.getHeight() - 350, "Assets/knight.png");
 	Samurai samurai(window.getWidth() - 600, window.getHeight() - 550, "Assets/samurai.png");
 
+	Player playerOne(200, 200, "Assets/knight.png");
+
 	window.setWindowTexture("Assets/backgroundGameScene1.png");
 
 	int kSaveEvent = knight.getEventID();
 	int sSaveEvent = samurai.getEventID();
+
+	int pOneSaveEvent = playerOne.getEventID();
 
 	int sInitial = 0; //120;
 
@@ -52,11 +57,15 @@ int gameLoop(int argc, char** argv)
 		samurai.move(window);
 		samurai.draw(sx);
 
+		playerOne.move(window);
+		playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
+
 		//playerOne.draw(sx);
 		//playerOne.move(window);
 
 		if (SDL_PollEvent(&event)) {
-			//playerOne.pollEvents(event);
+			playerOne.pollEventsP1(event);
+
 			knight.pollEvents(event);
 			samurai.pollEvents(event);
 			window.pollEvents(event);
@@ -73,6 +82,31 @@ int gameLoop(int argc, char** argv)
 
 		if (frameDelay > frameTime)
 			SDL_Delay(frameDelay - frameTime);
+
+		///////////////////////////////////////////
+
+		//if (pOneSaveEvent != playerOne.getEventID()) {
+		//	kx = 60;
+		//	pOneSaveEvent = playerOne.getEventID();
+		//}
+
+		//if (kAnimDel >= 5) { //animation delay for knight
+		//	kx += 180;
+
+		//	int limit = 1800;
+		//	if (playerOne.isRunning())
+		//		limit = 1440;
+		//	else if (playerOne.attack())
+		//		limit = 1260;
+
+		//	if (kx >= limit) {
+		//		kx = 60; //90-21
+		//	}
+		//	kAnimDel = 0;
+		//}
+
+		///////////////////////////////////////////
+
 
 		if (kSaveEvent != knight.getEventID()) {
 			kx = 60;
@@ -117,14 +151,15 @@ int gameLoop(int argc, char** argv)
 	window.~Window();
 	knight.~Knight();
 	samurai.~Samurai();
+	playerOne.~Player();
 
 	return 0;
 }
 
-//template <typename T>
-//T definePlayerOne(T character) {
-//	return character;
-//}
+template <typename T>
+T definePlayerOne(T character) {
+	return character;
+}
 
 int characterSelection(int argc, char** argv)
 {
@@ -159,15 +194,16 @@ int characterSelection(int argc, char** argv)
 
 		//auto playerOne = std::nullptr_t;
 
-
 		char1.draw();
 		char2.draw();
 
 		if (SDL_PollEvent(&event)) {
 			if (char1.pollEvents(event)) {
-				
+				definePlayerOne(Knight(200, 200, "Assets/knight.png"));
 			}
 		}
+
+		//auto playerOne = 
 
 		window.clear();
 

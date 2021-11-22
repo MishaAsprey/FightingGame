@@ -12,10 +12,10 @@ public:
 	void pollEvents(SDL_Event &event);
 	void move(Window &window);
 
-	inline int getx() { return _kPosX; }
-	inline bool isRunning() { return _running; }
-	inline bool attack() { return _attack; }
-	inline int getEventID() { return _eventID; }
+	inline const int& getx() const { return _kPosX; }
+	inline const bool& isRunning() const { return _running; }
+	inline const bool& attack() const { return _attack; }
+	inline const int& getEventID() const { return _eventID; }
 
 private:
 	int _kPosX, _kPosY;
