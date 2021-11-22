@@ -8,7 +8,7 @@ public:
 	Samurai(int x, int y, const char * texture);
 	~Samurai();
 
-	void draw(int x) const;
+	void draw(int x);
 	void pollEvents(SDL_Event &event);
 	void move(Window &window);
 
@@ -19,9 +19,9 @@ public:
 
 private:
 	int _sPosX, _sPosY;
-	mutable bool _running;
-	mutable bool _attack;
+	bool _running;
+	bool _attack;
 	int _eventID;
-	SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+	SDL_RendererFlip _flip = SDL_FLIP_HORIZONTAL;
 	SDL_Texture * _sTexture;
 };

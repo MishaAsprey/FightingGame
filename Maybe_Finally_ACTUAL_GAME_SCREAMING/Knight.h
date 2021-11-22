@@ -8,7 +8,7 @@ public:
 	Knight(int x, int y, const char * texture);
 	~Knight();
 
-	void draw(int x1);
+	void draw(int x);
 	void pollEvents(SDL_Event &event);
 	void move(Window &window);
 
@@ -22,6 +22,6 @@ private:
 	bool _running;
 	bool _attack;
 	int _eventID;
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_RendererFlip _flip = SDL_FLIP_NONE;
 	SDL_Texture * _kTexture;
 };

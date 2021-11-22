@@ -20,12 +20,12 @@ void Knight::pollEvents(SDL_Event &event)
 	if (keyState[SDL_SCANCODE_D]) {
 		_eventID = 1;
 		_velx = 7;
-		flip = SDL_FLIP_NONE;
+		_flip = SDL_FLIP_NONE;
 	}
 	else if (keyState[SDL_SCANCODE_A]) {
 		_eventID = 2;
 		_velx = -7;
-		flip = SDL_FLIP_HORIZONTAL;
+		_flip = SDL_FLIP_HORIZONTAL;
 	}
 	else if (keyState[SDL_SCANCODE_SPACE]) {
 		_eventID = 3;
@@ -57,7 +57,7 @@ void Knight::draw(int x)
 
 	SDL_Rect srcrect { x, y, 70, 70 };
 	SDL_Rect dstrect { _kPosX, _kPosY, 200, 200 };
-	SDL_RenderCopyEx(Window::renderer, _kTexture, &srcrect, &dstrect, NULL, nullptr, flip);
+	SDL_RenderCopyEx(Window::renderer, _kTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
 void Knight::move(Window &window)
