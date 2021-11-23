@@ -13,13 +13,13 @@ Player::~Player()
 	SDL_DestroyTexture(_pTexture);
 }
 
-//void Player::draw(int x, int character)
-//{
-//	if (character == 0)
-//		drawKnight(x);
-//	else
-//		drawSamurai(x);
-//}
+void Player::draw(int &x, int &character, int &saveEvent, int &animDelay)
+{
+	if (character == 0)
+		drawKnight(x, saveEvent, animDelay);
+	else if (character == 1)
+		drawSamurai(x, saveEvent, animDelay);
+}
 
 void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 {
@@ -28,7 +28,7 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 		saveEvent = getEventID();
 	}
 
-	if (animDelay >= 5) { //animation delay for knight
+	if (animDelay >= 5) { //animation delay for Knight
 		x += 180;
 
 		int limit = 1800;
@@ -68,7 +68,7 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 		saveEvent = getEventID();
 	}
 
-	if (animDelay >= 8) { //animation delay for knight
+	if (animDelay >= 8) { //animation delay for Samurai
 		x += 200;
 
 		int limit = 800;

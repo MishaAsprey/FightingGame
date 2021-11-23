@@ -14,7 +14,7 @@ Window window("DEMO", 1920, 1080);
 
 int mainMenu(int argc, char** argv); //forward declaration
 
-int gameLoop(int argc, char** argv)
+int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 {
 	const int FPS = 60;
 	const int frameDelay = 1000 / FPS;
@@ -25,16 +25,10 @@ int gameLoop(int argc, char** argv)
 	Knight knight(200, window.getHeight() - 350, "Assets/knight.png");
 	Samurai samurai(window.getWidth() - 600, window.getHeight() - 550, "Assets/samurai.png");
 
-	Player playerOne(200, 200, "Assets/knight.png");
-	Player playerTwo(600, 100, "Assets/samurai.png");
-
 	window.setWindowTexture("Assets/backgroundGameScene1.png");
 
 	int kSaveEvent = knight.getEventID();
 	int sSaveEvent = samurai.getEventID();
-
-	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
-	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
 	int sInitial = 0; //120;
 
@@ -42,6 +36,51 @@ int gameLoop(int argc, char** argv)
 	int sx = sInitial; //initial x for samurai sprite
 	int kAnimDel = 0; //animation delay: knight
 	int sAnimDel = 0; //animation delay: samurai
+
+	const char * knightTexture = "Assets/knight.png";
+	const char * samuraiTexture = "Assets/samurai.png";
+
+	const char * playerOneTexture = "";
+	int pOneInX = 0;
+	int pOneAnimDel = 0;
+
+	const char * playerTwoTexture = "";
+	int pTwoInX = 0;
+	int pTwoAnimDel = 0;
+
+	switch (playerOneSel) {
+	case 0:
+		playerOneTexture = knightTexture;
+		pOneInX = kx;
+		pOneAnimDel = kAnimDel;
+		break;
+	case 1:
+		playerOneTexture = samuraiTexture;
+		pOneInX = kx;
+		pOneAnimDel = sAnimDel;
+		break;
+	default: break;
+	}
+
+	switch (playerTwoSel) {
+	case 0:
+		playerTwoTexture = knightTexture;
+		pTwoInX = kx;
+		pTwoAnimDel = kAnimDel;
+		break;
+	case 1:
+		playerTwoTexture = samuraiTexture;
+		pTwoInX = sx;
+		pTwoAnimDel = sAnimDel;
+		break;
+	default: break;
+	}
+
+	Player playerOne(200, 200, playerOneTexture);
+	Player playerTwo(600, 100, playerTwoTexture);
+
+	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
+	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
 	while (window.isRunning()) {
 
@@ -57,11 +96,60 @@ int gameLoop(int argc, char** argv)
 		samurai.move(window);
 		samurai.draw(sx);
 
-		playerOne.move(window, 0);
-		playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
+		//playerOne.move(window, 0);
+		//playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
 
-		playerTwo.move(window, 1);
-		playerTwo.drawSamurai(sx, pTwoSaveEvent, sAnimDel);
+		//playerTwo.move(window, 1);
+		//playerTwo.drawSamurai(sx, pTwoSaveEvent, sAnimDel);
+
+		playerOne.move(window, playerOneSel);
+		playerOne.draw(pOneInX, playerOneSel, pOneSaveEvent, pOneAnimDel);
+
+		playerTwo.move(window, playerTwoSel);
+		playerTwo.draw(pTwoInX, playerTwoSel, pTwoSaveEvent, pTwoAnimDel);
+
+
+		//if (playerOneSel == 0) {
+		//	playerOne.move(window, 0);
+		//	playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
+		//}
+		//else {
+		//	playerOne.move(window, 1);
+		//	playerOne.drawSamurai(sx, pOneSaveEvent, sAnimDel);
+		//}
+
+		//if (playerTwoSel == 0) {
+		//	playerTwo.move(window, 0);
+		//	playerTwo.drawKnight(kx, pOneSaveEvent, kAnimDel);
+		//}
+		//else {
+		//	playerTwo.move(window, 1);
+		//	playerTwo.drawSamurai(sx, pOneSaveEvent, sAnimDel);
+		//}
+
+		//switch (playerOneSel) {
+		//case 0:
+		//	playerOne.move(window, 0);
+		//	playerOne.drawKnight(kx, pOneSaveEvent, kAnimDel);
+		//	break;
+		//case 1:
+		//	playerOne.move(window, 1);
+		//	playerOne.drawSamurai(sx, pOneSaveEvent, sAnimDel);
+		//	break;
+		//default: break;
+		//}
+
+		//switch (playerTwoSel) {
+		//case 0:
+		//	playerTwo.move(window, 0);
+		//	playerTwo.drawKnight(kx, pOneSaveEvent, kAnimDel);
+		//	break;
+		//case 1:
+		//	playerTwo.move(window, 1);
+		//	playerTwo.drawSamurai(sx, pOneSaveEvent, sAnimDel);
+		//	break;
+		//default: break;
+		//}
 
 		//playerOne.draw(sx);
 		//playerOne.move(window);
@@ -161,10 +249,10 @@ int gameLoop(int argc, char** argv)
 	return 0;
 }
 
-template <typename T>
-T definePlayerOne(T character) {
-	return character;
-}
+//template <typename T>
+//T definePlayerOne(T character) {
+//	return character;
+//}
 
 int characterSelection(int argc, char** argv)
 {
@@ -180,6 +268,10 @@ int characterSelection(int argc, char** argv)
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 
 	Samurai test(200, 200, "Assets/samurai.png");
+
+	int playerSelecting = 0;
+	int playerOne = 0;
+	int playerTwo = 0;
 
 	while (window.isRunning()) {
 		frameStart = SDL_GetTicks();
@@ -202,13 +294,27 @@ int characterSelection(int argc, char** argv)
 		char1.draw();
 		char2.draw();
 
+
+
 		if (SDL_PollEvent(&event)) {
-			if (char1.pollEvents(event)) {
-				definePlayerOne(Knight(200, 200, "Assets/knight.png"));
+			if (char1.pollEvents(event) && playerSelecting == 0) {
+				playerOne = 0;
+				playerSelecting++;
+			}
+			else if (char1.pollEvents(event) && playerSelecting == 1) {
+				playerTwo = 0;
+				playerSelecting++;
+			}
+
+			if (char2.pollEvents(event) && playerSelecting == 0) {
+				playerOne = 1;
+				playerSelecting++;
+			}
+			else if (char2.pollEvents(event) && playerSelecting == 1) {
+				playerTwo = 1;
+				playerSelecting++;
 			}
 		}
-
-		//auto playerOne = 
 
 		window.clear();
 
@@ -216,14 +322,14 @@ int characterSelection(int argc, char** argv)
 
 		if (frameDelay > frameTime)
 			SDL_Delay(frameDelay - frameTime);
+		if (playerSelecting >= 2)
+			break;
 
-		SDL_Delay(1000);
-		char1.~Button();
-		char2.~Button();
-		return gameLoop(argc, argv);
 	}
+	char1.~Button();
+	char2.~Button();
 
-	return gameLoop(argc, argv);
+	return gameLoop(argc, argv, playerOne, playerTwo);
 }
 
 int mainMenu(int argc, char** argv)

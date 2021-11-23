@@ -12,7 +12,7 @@ public:
 	Player(int xPos, int yPos, const char * texture);
 	~Player();
 
-	void draw(int x, int character);
+	void draw(int &x, int &character, int &saveEvent, int &animDelay);
 
 	void drawKnight(int &x, int &saveEvent, int &animDelay);
 	void drawSamurai(int &x, int &saveEvent, int &animDelay);
