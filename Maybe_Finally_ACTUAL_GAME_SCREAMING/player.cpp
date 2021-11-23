@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(int xPos, int yPos, const char * texture)
-	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0)
+Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip)
+	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0), _flip(flip)
 {
 	auto surface = IMG_Load(texture);
 	_pTexture = SDL_CreateTextureFromSurface(Window::renderer, surface);
@@ -43,6 +43,8 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 		animDelay = 0;
 	}
 
+	animDelay++;
+
 	_running = false;
 	int y = 45; //90 - 30 - 15
 
@@ -81,6 +83,8 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 			x = initial; //90-21
 		animDelay = 0;
 	}
+
+	animDelay++;
 
 	_running = false;
 	int y = 0;
@@ -151,10 +155,14 @@ void Player::pollEventsP2(SDL_Event &event)
 
 void Player::move(Window &window, int character)
 {
-	int rightWall = window.getWidth() - _w;
+	int rightWall = 0;
 	int leftWall = 0;
-	
-	if (character == 1) {
+
+	if (character == 0) {
+		rightWall = window.getWidth() - _w;
+		leftWall = 0;
+	}
+	else if (character == 1) {
 		rightWall = window.getWidth() - 400;
 		leftWall = -200;
 	}

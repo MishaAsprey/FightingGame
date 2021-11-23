@@ -9,7 +9,7 @@
 class Player : public Hero
 {
 public:
-	Player(int xPos, int yPos, const char * texture);
+	Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip);
 	~Player();
 
 	void draw(int &x, int &character, int &saveEvent, int &animDelay);
