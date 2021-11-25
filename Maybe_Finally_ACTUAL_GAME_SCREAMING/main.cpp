@@ -88,8 +88,8 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	default: break;
 	}
 
-	Player playerOne(pOneXPos, pOneYPos, playerOneTexture, SDL_FLIP_NONE);
-	Player playerTwo(pTwoXpos, pTwoYPos, playerTwoTexture, SDL_FLIP_HORIZONTAL);
+	Player playerOne(pOneXPos, pOneYPos, playerOneTexture, SDL_FLIP_NONE, playerOneSel);
+	Player playerTwo(pTwoXpos, pTwoYPos, playerTwoTexture, SDL_FLIP_HORIZONTAL, playerTwoSel);
 
 	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
 	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
@@ -108,11 +108,11 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 		//samurai.move(window);
 		//samurai.draw(sx);
 
-		playerOne.move(window, playerOneSel);
-		playerOne.draw(pOneInX, playerOneSel, pOneSaveEvent, pOneAnimDel);
+		playerOne.move(window);
+		playerOne.draw(pOneInX, pOneSaveEvent, pOneAnimDel);
 
-		playerTwo.move(window, playerTwoSel);
-		playerTwo.draw(pTwoInX, playerTwoSel, pTwoSaveEvent, pTwoAnimDel);
+		playerTwo.move(window);
+		playerTwo.draw(pTwoInX, pTwoSaveEvent, pTwoAnimDel);
 
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);

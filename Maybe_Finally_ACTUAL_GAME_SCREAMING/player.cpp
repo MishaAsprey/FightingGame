@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip)
-	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0), _flip(flip)
+Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character)
+	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0), _flip(flip), _character(character)
 {
 	auto surface = IMG_Load(texture);
 	_pTexture = SDL_CreateTextureFromSurface(Window::renderer, surface);
@@ -13,11 +13,11 @@ Player::~Player()
 	SDL_DestroyTexture(_pTexture);
 }
 
-void Player::draw(int &x, int &character, int &saveEvent, int &animDelay)
+void Player::draw(int &x, int &saveEvent, int &animDelay)
 {
-	if (character == 0)
+	if (_character == 0)
 		drawKnight(x, saveEvent, animDelay);
-	else if (character == 1)
+	else if (_character == 1)
 		drawSamurai(x, saveEvent, animDelay);
 }
 
@@ -79,8 +79,13 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 		else if (attack())
 			limit = 800;
 
-		if (x >= limit)
+		if (_attack && x >= limit) {
+			_attack = false;
+		}
+
+		if (x >= limit) {
 			x = initial; //90-21
+		}
 		animDelay = 0;
 	}
 
@@ -101,6 +106,19 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 
 void Player::pollEventsP1(SDL_Event &event)
 {
+	//switch (event.type) {
+	//case SDL_KEYDOWN:
+	//	switch (event.key.keysym.sym) {
+	//	case SDLK_SPACE:
+	//		_eventID = 3;
+	//		_velx = 0;
+	//		_attack = true;
+	//		break;
+	//	default: break;
+	//	}
+	//default: break;
+	//}
+
 	const Uint8 * keyState = SDL_GetKeyboardState(NULL);
 
 	if (keyState[SDL_SCANCODE_D]) {
@@ -153,16 +171,16 @@ void Player::pollEventsP2(SDL_Event &event)
 	}
 }
 
-void Player::move(Window &window, int character)
+void Player::move(Window &window)
 {
 	int rightWall = 0;
 	int leftWall = 0;
 
-	if (character == 0) {
+	if (_character == 0) {
 		rightWall = window.getWidth() - _w;
 		leftWall = 0;
 	}
-	else if (character == 1) {
+	else if (_character == 1) {
 		rightWall = window.getWidth() - 400;
 		leftWall = -200;
 	}
