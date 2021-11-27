@@ -7,6 +7,7 @@
 #include "Samurai.h"
 #include "Button.h"
 #include "Player.h"
+#include "Hitbox.h"
 
 SDL_Event event;
 
@@ -88,11 +89,13 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	default: break;
 	}
 
-	Player playerOne(pOneXPos, pOneYPos, playerOneTexture, SDL_FLIP_NONE, playerOneSel);
-	Player playerTwo(pTwoXpos, pTwoYPos, playerTwoTexture, SDL_FLIP_HORIZONTAL, playerTwoSel);
+	Player playerOne(pOneXPos, pOneYPos, playerOneTexture, SDL_FLIP_NONE, playerOneSel, 0);
+	Player playerTwo(pTwoXpos, pTwoYPos, playerTwoTexture, SDL_FLIP_HORIZONTAL, playerTwoSel, 1);
 
 	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
 	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
+
+	//Hitbox hitbox(playerOneSel, 0);
 
 	while (window.isRunning()) {
 
@@ -113,6 +116,12 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 
 		playerTwo.move(window);
 		playerTwo.draw(pTwoInX, pTwoSaveEvent, pTwoAnimDel);
+
+		if (playerOne.getEventID() == 3) {
+			Hitbox hitbox(playerOneSel, 0);
+			hitbox.draw();
+			//hitbox.~Hitbox();
+		}
 
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);
@@ -317,7 +326,6 @@ int mainMenu(int argc, char** argv)
 	buttonHelp.~Button();
 	buttonQuit.~Button();
 
-	//return gameLoop(argc, argv);
 	return characterSelection(argc, argv);
 }
 

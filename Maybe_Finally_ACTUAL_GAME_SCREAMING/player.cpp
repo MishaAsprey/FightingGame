@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character)
-	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0), _flip(flip), _character(character)
+Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character, int playerID)
+	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0),
+	  _flip(flip), _character(character), _playerID(playerID)
 {
 	auto surface = IMG_Load(texture);
 	_pTexture = SDL_CreateTextureFromSurface(Window::renderer, surface);

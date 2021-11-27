@@ -9,7 +9,7 @@
 class Player : public Hero
 {
 public:
-	Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character);
+	Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character, int playerID);
 	~Player();
 
 	void draw(int &x, int &saveEvent, int &animDelay);
@@ -22,6 +22,7 @@ public:
 	void move(Window &window);
 
 	inline int getXpos() const { return _xPos; }
+	inline int getYpos() const { return _yPos; }
 	inline bool isRunning() const { return _running; }
 	inline bool attack() const { return _attack; }
 	inline int getEventID() const { return _eventID; }
@@ -32,6 +33,7 @@ private:
 	bool _attack;
 	int _eventID;
 	int _character;
+	int _playerID;
 
 	SDL_RendererFlip _flip;
 	SDL_Texture * _pTexture;
