@@ -23,13 +23,7 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	Uint32 frameStart;
 	int frameTime;
 
-	//Knight knight(200, window.getHeight() - 350, "Assets/knight.png");
-	//Samurai samurai(window.getWidth() - 600, window.getHeight() - 550, "Assets/samurai.png");
-
 	window.setWindowTexture("Assets/backgroundGameScene1.png");
-
-	//int kSaveEvent = knight.getEventID();
-	//int sSaveEvent = samurai.getEventID();
 
 	int sInitial = 0; //120;
 
@@ -98,18 +92,9 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	//Hitbox hitbox(playerOneSel, 0);
 
 	while (window.isRunning()) {
-
-		//if (window.getCurWindow() == Window::CurrWindow::mainMenu) {
-		//	mainMenu(argc, argv, window);
-		//}
-
 		frameStart = SDL_GetTicks();
 
 		window.draw();
-		//knight.move(window);
-		//knight.draw(kx);
-		//samurai.move(window);
-		//samurai.draw(sx);
 
 		playerOne.move(window);
 		playerOne.draw(pOneInX, pOneSaveEvent, pOneAnimDel);
@@ -126,9 +111,6 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);
 			playerTwo.pollEventsP2(event);
-
-			//knight.pollEvents(event);
-			//samurai.pollEvents(event);
 			window.pollEvents(event);
 		}
 
@@ -143,75 +125,9 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 
 		if (frameDelay > frameTime)
 			SDL_Delay(frameDelay - frameTime);
-
-		///////////////////////////////////////////
-
-		//if (pOneSaveEvent != playerOne.getEventID()) {
-		//	kx = 60;
-		//	pOneSaveEvent = playerOne.getEventID();
-		//}
-
-		//if (kAnimDel >= 5) { //animation delay for knight
-		//	kx += 180;
-
-		//	int limit = 1800;
-		//	if (playerOne.isRunning())
-		//		limit = 1440;
-		//	else if (playerOne.attack())
-		//		limit = 1260;
-
-		//	if (kx >= limit) {
-		//		kx = 60; //90-21
-		//	}
-		//	kAnimDel = 0;
-		//}
-
-		///////////////////////////////////////////
-
-
-		//if (kSaveEvent != knight.getEventID()) {
-		//	kx = 60;
-		//	kSaveEvent = knight.getEventID();
-		//}
-
-		//if (kAnimDel >= 5) { //animation delay for knight
-		//	kx += 180;
-
-		//	int limit = 1800;
-		//	if (knight.isRunning())
-		//		limit = 1440;
-		//	else if (knight.attack())
-		//		limit = 1260;
-
-		//	if (kx >= limit) {
-		//		kx = 60; //90-21
-		//	}
-		//	kAnimDel = 0;
-		//}
-
-		//if (sSaveEvent != samurai.getEventID()) {
-		//	sx = sInitial;
-		//	sSaveEvent = samurai.getEventID();
-		//}
-
-		//if (sAnimDel >= 8) { //animation delay for knight
-		//	sx += 200;
-
-		//	int limit = 800;
-		//	if (samurai.isRunning())
-		//		limit = 1600;
-		//	else if (samurai.attack())
-		//		limit = 800;
-
-		//	if (sx >= limit)
-		//		sx = sInitial; //90-21
-		//	sAnimDel = 0;
-		//}
 	}
 
 	window.~Window();
-	//knight.~Knight();
-	//samurai.~Samurai();
 	playerOne.~Player();
 	playerTwo.~Player();
 
