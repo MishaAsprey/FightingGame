@@ -38,12 +38,6 @@ void Samurai::pollEvents(SDL_Event &event)
 		_attack = false;
 	}
 
-	//if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-	//	if (event.key.keysym.sym == SDLK_SPACE) {
-	//		_attack = true;
-	//	}
-	//}
-
 	SDL_PumpEvents();
 }
 

@@ -107,6 +107,10 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 			hitbox.draw();
 			//hitbox.~Hitbox();
 		}
+		if (playerTwo.getEventID() == 3) {
+			Hitbox hitbox(playerTwoSel, 1);
+			hitbox.draw();
+		}
 
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);
@@ -147,7 +151,13 @@ int characterSelection(int argc, char** argv)
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 
-	Samurai test(200, 200, "Assets/samurai.png");
+	//Knight knight(window.getWidth() / 2, window.getHeight() / 2, "Assets/knight.png");
+	//Samurai samurai(window.getWidth() / 2, window.getHeight() / 2, "Assets/samurai.png");
+
+	Player knight(window.getWidth() / 2, window.getHeight() / 2,
+		"Assets/knight.png", SDL_FLIP_NONE, 0, 0);
+	Player samurai(window.getWidth() / 2, window.getHeight() / 2,
+		"Assets/samurai.png", SDL_FLIP_NONE, 0, 0);
 
 	int playerSelecting = 0;
 	int playerOne = 0;
