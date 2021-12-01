@@ -1,6 +1,7 @@
 #include "Hitbox.h"
+#include "Player.h"
 
-Hitbox::Hitbox(int character, int playerID)
+Hitbox::Hitbox(Character character, int playerID)
 {
 	_xPos = 200;
 	_yPos = 200;

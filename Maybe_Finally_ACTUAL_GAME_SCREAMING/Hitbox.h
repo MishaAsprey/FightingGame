@@ -3,11 +3,12 @@
 #include <SDL.h>
 
 #include "Window.h"
+#include "Player.h"
 
 class Hitbox
 {
 public:
-	Hitbox(int character, int playerID);
+	Hitbox(Character character, int playerID);
 	~Hitbox();
 
 	void draw() const; //for debugging purposes

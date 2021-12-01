@@ -16,7 +16,7 @@ Window window("DEMO", 1920, 1080);
 int mainMenu(int argc, char** argv); //forward declaration
 int helpScreen(int argc, char** argv); //forward declaration
 
-int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
+int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoSel)
 {
 	const int FPS = 60;
 	const int frameDelay = 1000 / FPS;
@@ -49,14 +49,14 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	int pTwoAnimDel = 0;
 
 	switch (playerOneSel) {
-	case 0:
+	case Character::knight:
 		playerOneTexture = knightTexture;
 		pOneXPos = 200;
 		pOneYPos = window.getHeight() - 350;
 		pOneInX = kx;
 		pOneAnimDel = kAnimDel;
 		break;
-	case 1:
+	case Character::samurai:
 		playerOneTexture = samuraiTexture;
 		pOneXPos = 50;
 		pOneYPos = window.getHeight() - 550;
@@ -67,14 +67,14 @@ int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 	}
 
 	switch (playerTwoSel) {
-	case 0:
+	case Character::knight:
 		playerTwoTexture = knightTexture;
 		pTwoXpos = window.getWidth() - 400;
 		pTwoYPos = window.getHeight() - 350;
 		pTwoInX = kx;
 		pTwoAnimDel = kAnimDel;
 		break;
-	case 1:
+	case Character::samurai:
 		playerTwoTexture = samuraiTexture;
 		pTwoXpos = window.getWidth() - 600;
 		pTwoYPos = window.getHeight() - 550;
@@ -156,13 +156,13 @@ int characterSelection(int argc, char** argv)
 	//Samurai samurai(window.getWidth() / 2, window.getHeight() / 2, "Assets/samurai.png");
 
 	Player knight(window.getWidth() / 2, window.getHeight() / 2,
-		"Assets/knight.png", SDL_FLIP_NONE, 0, 0);
+		"Assets/knight.png", SDL_FLIP_NONE, Character::knight, 0);
 	Player samurai(window.getWidth() / 2, window.getHeight() / 2,
-		"Assets/samurai.png", SDL_FLIP_NONE, 0, 0);
+		"Assets/samurai.png", SDL_FLIP_NONE, Character::samurai, 0);
 
 	int playerSelecting = 0;
-	int playerOne = 0;
-	int playerTwo = 0;
+	Character playerOne = Character::knight;
+	Character playerTwo = Character::knight;
 
 	while (window.isRunning()) {
 		frameStart = SDL_GetTicks();
@@ -174,20 +174,20 @@ int characterSelection(int argc, char** argv)
 
 		if (SDL_PollEvent(&event)) {
 			if (char1.pollEvents(event) && playerSelecting == 0) {
-				playerOne = 0;
+				playerOne = Character::knight;
 				playerSelecting++;
 			}
 			else if (char1.pollEvents(event) && playerSelecting == 1) {
-				playerTwo = 0;
+				playerTwo = Character::knight;
 				playerSelecting++;
 			}
 
 			if (char2.pollEvents(event) && playerSelecting == 0) {
-				playerOne = 1;
+				playerOne = Character::samurai;
 				playerSelecting++;
 			}
 			else if (char2.pollEvents(event) && playerSelecting == 1) {
-				playerTwo = 1;
+				playerTwo = Character::samurai;
 				playerSelecting++;
 			}
 		}

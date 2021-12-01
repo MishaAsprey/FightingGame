@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character, int playerID)
+Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, Character character, int playerID)
 	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0),
 	  _flip(flip), _character(character), _playerID(playerID)
 {
@@ -16,9 +16,9 @@ Player::~Player()
 
 void Player::draw(int &x, int &saveEvent, int &animDelay)
 {
-	if (_character == 0)
+	if (_character == Character::knight)
 		drawKnight(x, saveEvent, animDelay);
-	else if (_character == 1)
+	else if (_character == Character::samurai)
 		drawSamurai(x, saveEvent, animDelay);
 }
 
@@ -177,11 +177,11 @@ void Player::move(Window &window)
 	int rightWall = 0;
 	int leftWall = 0;
 
-	if (_character == 0) {
+	if (_character == Character::knight) {
 		rightWall = window.getWidth() - _w;
 		leftWall = 0;
 	}
-	else if (_character == 1) {
+	else if (_character == Character::samurai) {
 		rightWall = window.getWidth() - 400;
 		leftWall = -200;
 	}

@@ -6,10 +6,15 @@
 #include "Window.h"
 #include "Hero.h"
 
+enum class Character
+{
+	knight, samurai
+};
+
 class Player : public Hero
 {
 public:
-	Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, int character, int playerID);
+	Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, Character character, int playerID);
 	~Player();
 
 	void draw(int &x, int &saveEvent, int &animDelay);
@@ -32,7 +37,7 @@ private:
 	bool _running;
 	bool _attack;
 	int _eventID;
-	int _character;
+	Character _character;
 	int _playerID;
 
 	SDL_RendererFlip _flip;
