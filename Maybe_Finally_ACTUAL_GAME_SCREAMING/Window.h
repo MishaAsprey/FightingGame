@@ -10,7 +10,7 @@ public:
 	~Window();
 
 	enum class CurrWindow {
-		mainMenu, game
+		mainMenu, game, help
 	};
 
 	void clear() const;

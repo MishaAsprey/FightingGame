@@ -14,6 +14,7 @@ SDL_Event event;
 Window window("DEMO", 1920, 1080);
 
 int mainMenu(int argc, char** argv); //forward declaration
+int helpScreen(int argc, char** argv); //forward declaration
 
 int gameLoop(int argc, char** argv, int playerOneSel, int playerTwoSel)
 {
@@ -240,11 +241,13 @@ int mainMenu(int argc, char** argv)
 		if (SDL_PollEvent(&event)) {
 			if (buttonStart.pollEvents(event))
 				window.setCurWindow(Window::CurrWindow::game);
+			else if (buttonHelp.pollEvents(event))
+				window.setCurWindow(Window::CurrWindow::help);
 			else if (buttonQuit.pollEvents(event))
 				window.terminate();
 		}
 
-		if (window.getCurWindow() == Window::CurrWindow::game)
+		if (window.getCurWindow() != Window::CurrWindow::mainMenu)
 			break;
 	}
 
@@ -252,7 +255,37 @@ int mainMenu(int argc, char** argv)
 	buttonHelp.~Button();
 	buttonQuit.~Button();
 
-	return characterSelection(argc, argv);
+	if (window.getCurWindow() == Window::CurrWindow::game)
+		return characterSelection(argc, argv);
+	else if (window.getCurWindow() == Window::CurrWindow::help)
+		return helpScreen(argc, argv);
+	return 0;
+}
+
+int helpScreen(int argc, char** argv)
+{
+	int buttonCentrePos = window.getWidth() / 2 - 128;
+
+	Button buttonBack(buttonCentrePos, 600, "Assets/ButtonHelp.png");
+
+	while (window.isRunning()) {
+		window.draw();
+		buttonBack.draw();
+		window.clear();
+
+		if (SDL_PollEvent(&event)) {
+			window.pollEvents(event);
+			if (buttonBack.pollEvents(event))
+				window.setCurWindow(Window::CurrWindow::mainMenu);
+		}
+
+		if (window.getCurWindow() == Window::CurrWindow::mainMenu)
+			break;
+	}
+
+	buttonBack.~Button();
+
+	return mainMenu(argc, argv);
 }
 
 int main(int argc, char** argv)
