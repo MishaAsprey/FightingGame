@@ -4,6 +4,18 @@ Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, 
 	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0),
 	  _flip(flip), _character(character), _playerID(playerID)
 {
+	switch (character) {
+	case Character::knight:
+		_health = 100;
+		_damage = 30;
+		break;
+	case Character::samurai:
+		_health = 70;
+		_damage = 30;
+		break;
+	default: break;
+	}
+
 	auto surface = IMG_Load(texture);
 	_pTexture = SDL_CreateTextureFromSurface(Window::renderer, surface);
 	SDL_FreeSurface(surface);
@@ -168,6 +180,15 @@ void Player::pollEventsP2(SDL_Event &event)
 	}
 }
 
+void Player::takeHit(Character character, int damage, Player& player)
+{
+	_health -= damage;
+
+	if (_health <= 0) {
+		player.~Player(); //player death
+	}
+}
+
 void Player::move(Window &window)
 {
 	int rightWall = 0;
@@ -179,7 +200,7 @@ void Player::move(Window &window)
 	}
 	else if (_character == Character::samurai) {
 		rightWall = window.getWidth() - 400;
-		leftWall = -200;
+		leftWall = - 200;
 	}
 
 	_xPos += _velx;

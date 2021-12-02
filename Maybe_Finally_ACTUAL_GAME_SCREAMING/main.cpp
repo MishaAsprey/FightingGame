@@ -8,6 +8,7 @@
 #include "Button.h"
 #include "Player.h"
 #include "Hitbox.h"
+#include "Hurtbox.h"
 
 SDL_Event event;
 
@@ -87,6 +88,9 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 	Player playerOne(pOneXPos, pOneYPos, playerOneTexture, SDL_FLIP_NONE, playerOneSel, 0);
 	Player playerTwo(pTwoXpos, pTwoYPos, playerTwoTexture, SDL_FLIP_HORIZONTAL, playerTwoSel, 1);
 
+	Hurtbox hurtBoxPlayerOne(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
+	Hurtbox hurtBoxPlayerTwo(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
+
 	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
 	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
@@ -105,6 +109,9 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 			Hitbox hitbox(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
 			hitbox.draw();
 		}
+
+		hurtBoxPlayerOne.draw(playerOneSel, playerOne.getXpos());
+		hurtBoxPlayerTwo.draw(playerTwoSel, playerTwo.getXpos());
 
 		playerOne.move(window);
 		playerOne.draw(pOneInX, pOneSaveEvent, pOneAnimDel);

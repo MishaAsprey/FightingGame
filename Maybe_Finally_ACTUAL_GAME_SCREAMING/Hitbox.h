@@ -4,8 +4,9 @@
 
 #include "Window.h"
 #include "Player.h"
+#include "Collider.h"
 
-class Hitbox
+class Hitbox : public Collider
 {
 public:
 	Hitbox(Character character, int playerID, int currXpos, int currYpos, SDL_RendererFlip flip);
@@ -14,9 +15,5 @@ public:
 	void draw() const; //for debugging purposes
 
 private:
-	int _xPos = 0;
-	int _yPos = 0;
-	int _width = 0;
-	int _length = 0;
 	SDL_Rect _hitbox;
 };

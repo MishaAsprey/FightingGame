@@ -152,8 +152,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="collider.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="hitbox.cpp" />
+    <ClCompile Include="hurtbox.cpp" />
     <ClCompile Include="knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
@@ -162,8 +164,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Hitbox.h" />
+    <ClInclude Include="Hurtbox.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Samurai.h" />

@@ -25,12 +25,14 @@ public:
 	void pollEventsP1(SDL_Event &event);
 	void pollEventsP2(SDL_Event &event);
 	void move(Window &window);
+	void takeHit(Character character, int damage, Player& player);
 
 	inline int getXpos() const { return _xPos; }
 	inline int getYpos() const { return _yPos; }
 	inline bool isRunning() const { return _running; }
 	inline bool attack() const { return _attack; }
 	inline int getEventID() const { return _eventID; }
+	inline int getHealth() const { return _health; }
 	inline SDL_RendererFlip getFlip() const { return _flip; }
 
 private:
@@ -38,8 +40,12 @@ private:
 	bool _running;
 	bool _attack;
 	int _eventID;
-	Character _character;
 	int _playerID;
+
+	int _health = 0;
+	int _damage = 0;
+
+	Character _character;
 
 	SDL_RendererFlip _flip;
 	SDL_Texture * _pTexture;
