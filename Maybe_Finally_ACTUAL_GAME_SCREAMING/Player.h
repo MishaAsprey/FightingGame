@@ -31,6 +31,7 @@ public:
 	inline bool isRunning() const { return _running; }
 	inline bool attack() const { return _attack; }
 	inline int getEventID() const { return _eventID; }
+	inline SDL_RendererFlip getFlip() const { return _flip; }
 
 private:
 	int _xPos, _yPos;

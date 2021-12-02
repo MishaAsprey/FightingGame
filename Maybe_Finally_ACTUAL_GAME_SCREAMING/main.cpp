@@ -97,21 +97,30 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 
 		window.draw();
 
+		if (playerOne.getEventID() == 3) {
+			Hitbox hitbox(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
+			hitbox.draw();
+		}
+		if (playerTwo.getEventID() == 3) {
+			Hitbox hitbox(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
+			hitbox.draw();
+		}
+
 		playerOne.move(window);
 		playerOne.draw(pOneInX, pOneSaveEvent, pOneAnimDel);
 
 		playerTwo.move(window);
 		playerTwo.draw(pTwoInX, pTwoSaveEvent, pTwoAnimDel);
 
-		if (playerOne.getEventID() == 3) {
-			Hitbox hitbox(playerOneSel, 0);
-			hitbox.draw();
-			//hitbox.~Hitbox();
-		}
-		if (playerTwo.getEventID() == 3) {
-			Hitbox hitbox(playerTwoSel, 1);
-			hitbox.draw();
-		}
+		//if (playerOne.getEventID() == 3) {
+		//	Hitbox hitbox(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
+		//	hitbox.draw();
+		//	//hitbox.~Hitbox();
+		//}
+		//if (playerTwo.getEventID() == 3) {
+		//	Hitbox hitbox(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
+		//	hitbox.draw();
+		//}
 
 		if (SDL_PollEvent(&event)) {
 			playerOne.pollEventsP1(event);

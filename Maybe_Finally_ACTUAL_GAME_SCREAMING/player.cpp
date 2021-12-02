@@ -80,10 +80,6 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 		else if (attack())
 			limit = 800;
 
-		if (_attack && x >= limit) {
-			_attack = false;
-		}
-
 		if (x >= limit) {
 			x = initial; //90-21
 		}
