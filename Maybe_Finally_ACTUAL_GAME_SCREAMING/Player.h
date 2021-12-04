@@ -33,6 +33,7 @@ public:
 	inline bool attack() const { return _attack; }
 	inline int getEventID() const { return _eventID; }
 	inline int getHealth() const { return _health; }
+	inline int getDamage() const { return _damage; }
 	inline SDL_RendererFlip getFlip() const { return _flip; }
 
 private:

@@ -91,6 +91,9 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 	Hurtbox hurtBoxPlayerOne(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
 	Hurtbox hurtBoxPlayerTwo(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
 
+	std::cout << hurtBoxPlayerOne.getXpos() << std::endl;
+	std::cout << hurtBoxPlayerTwo.getXpos() << std::endl;
+
 	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
 	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
@@ -102,12 +105,16 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 		window.draw();
 
 		if (playerOne.getEventID() == 3) {
-			Hitbox hitbox(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
-			hitbox.draw();
+			Hitbox hitbox1(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
+			hitbox1.draw();
+			if (hurtBoxPlayerTwo.collide(hitbox1))
+				playerTwo.takeHit(playerTwoSel, playerOne.getDamage(), playerTwo);
 		}
 		if (playerTwo.getEventID() == 3) {
-			Hitbox hitbox(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
-			hitbox.draw();
+			Hitbox hitbox2(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
+			hitbox2.draw();
+			if (hurtBoxPlayerOne.collide(hitbox2))
+				playerOne.takeHit(playerOneSel, playerTwo.getDamage(), playerOne);
 		}
 
 		hurtBoxPlayerOne.draw(playerOneSel, playerOne.getXpos());
@@ -118,6 +125,9 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 
 		playerTwo.move(window);
 		playerTwo.draw(pTwoInX, pTwoSaveEvent, pTwoAnimDel);
+
+		//playerOne.takeHit(playerOneSel, playerTwo.getDamage(), playerOne);
+		//playerTwo.takeHit(playerTwoSel, playerOne.getDamage(), playerTwo);
 
 		//if (playerOne.getEventID() == 3) {
 		//	Hitbox hitbox(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());

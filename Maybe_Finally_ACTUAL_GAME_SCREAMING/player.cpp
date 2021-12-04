@@ -180,7 +180,7 @@ void Player::pollEventsP2(SDL_Event &event)
 	}
 }
 
-void Player::takeHit(Character character, int damage, Player& player)
+void Player::takeHit(Character character, int damage, Player &player)
 {
 	_health -= damage;
 
@@ -200,7 +200,7 @@ void Player::move(Window &window)
 	}
 	else if (_character == Character::samurai) {
 		rightWall = window.getWidth() - 400;
-		leftWall = - 200;
+		leftWall = -200;
 	}
 
 	_xPos += _velx;

@@ -48,3 +48,10 @@ void Hurtbox::draw(Character character, int playerXpos)
 	SDL_RenderDrawRect(Window::renderer, &_hurtbox);
 	SDL_RenderFillRect(Window::renderer, &_hurtbox);
 }
+
+bool Hurtbox::collide(Hitbox hitbox)
+{
+	if (_xPos >= hitbox.getXpos() && _xPos <= hitbox.getXpos() + hitbox.getLength())
+		return true;
+	return false;
+}
