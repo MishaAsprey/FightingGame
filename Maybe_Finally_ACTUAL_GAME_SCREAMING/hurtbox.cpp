@@ -51,7 +51,13 @@ void Hurtbox::draw(Character character, int playerXpos)
 
 bool Hurtbox::collide(Hitbox hitbox)
 {
-	if (_xPos >= hitbox.getXpos() && _xPos <= hitbox.getXpos() + hitbox.getLength())
+	if (
+		( _xPos >= hitbox.getXpos() && _xPos <= hitbox.getXpos() + hitbox.getWidth() )
+		||
+		( _xPos + _width >= hitbox.getXpos() && _xPos + _length <= hitbox.getXpos() + hitbox.getWidth() )
+	   )
+	{
 		return true;
+	}
 	return false;
 }
