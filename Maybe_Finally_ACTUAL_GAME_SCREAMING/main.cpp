@@ -140,8 +140,10 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 		//}
 
 		if (SDL_PollEvent(&event)) {
-			playerOne.pollEventsP1(event);
-			playerTwo.pollEventsP2(event);
+			if (!playerOne.attack())
+				playerOne.pollEventsP1(event);
+			if (!playerTwo.attack())
+				playerTwo.pollEventsP2(event);
 			window.pollEvents(event);
 		}
 

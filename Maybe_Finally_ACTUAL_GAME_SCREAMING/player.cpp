@@ -68,6 +68,10 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 	else if (_attack) {
 		y = 230 + 1; //245
 	}
+	if (_eventID == 3 && x >= 1100) {
+		_attack = false; ///////////////////////////////
+		_eventID = 0;
+	}
 
 	SDL_Rect srcrect { x, y, 70, 70 };
 	SDL_Rect dstrect { _xPos, _yPos, 200, 200 };
@@ -107,6 +111,11 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 		y = 195 + 1; //200
 	else if (_attack)
 		y = 400 + 8;
+
+	if (_eventID == 3 && x >= 600) {
+		_attack = false; ///////////////////////////////
+		_eventID = 0;
+	}
 
 	SDL_Rect srcrect { x, y, 200, 200 };
 	SDL_Rect dstrect { _xPos, _yPos + 13, 600, 600 };
