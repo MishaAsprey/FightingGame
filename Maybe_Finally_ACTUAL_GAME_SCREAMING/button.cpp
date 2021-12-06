@@ -2,6 +2,14 @@
 
 #include "Button.h"
 
+Button::Button()
+	: _xPos(0), _yPos(0), _overButton(false)
+{
+	auto surface = IMG_Load("Assets/ButtonStart.png");
+	_bTexture = SDL_CreateTextureFromSurface(Window::renderer, surface);
+	SDL_FreeSurface(surface);
+}
+
 Button::Button(int xPos, int yPos, const char * texture)
 	: _xPos(xPos), _yPos(yPos), _overButton(false)
 {

@@ -8,13 +8,14 @@
 class Button
 {
 public:
+	Button();
 	Button(int xPos, int yPos, const char * textrue);
 	~Button();
 
 	bool pollEvents(SDL_Event &event);
 	void draw() const;
 
-private:
+protected:
 	int _xPos;
 	int _yPos;
 

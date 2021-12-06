@@ -6,6 +6,7 @@
 #include "Knight.h"
 #include "Samurai.h"
 #include "Button.h"
+#include "ArrowButton.h"
 #include "Player.h"
 #include "Hitbox.h"
 #include "Hurtbox.h"
@@ -180,6 +181,8 @@ int characterSelection(int argc, char** argv)
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 
+	ArrowButton arrBtn(300, 300, "Assets/swordArrow.png");
+
 	//Knight knight(window.getWidth() / 2, window.getHeight() / 2, "Assets/knight.png");
 	//Samurai samurai(window.getWidth() / 2, window.getHeight() / 2, "Assets/samurai.png");
 
@@ -200,6 +203,8 @@ int characterSelection(int argc, char** argv)
 		char1.draw();
 		char2.draw();
 
+		arrBtn.draw();
+
 		if (SDL_PollEvent(&event)) {
 			if (char1.pollEvents(event) && playerSelecting == 0) {
 				playerOne = Character::knight;
@@ -218,6 +223,8 @@ int characterSelection(int argc, char** argv)
 				playerTwo = Character::samurai;
 				playerSelecting++;
 			}
+
+			arrBtn.pollEvents(event);
 		}
 		window.clear();
 
