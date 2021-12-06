@@ -201,12 +201,12 @@ int characterSelection(int argc, char** argv)
 	Character playerTwo = Character::knight;
 
 	//---------// - PLACEHOLDER
-	int a = 60;
-	int b = 1;
-	int c = 5;
-	int aa = 0;
-	int bb = 1;
-	int cc = 8;
+	int kInitial = 60; //initial x position of every frame: knight
+	int kEvent = 1; //idle: knight
+	int kAnimDel = 5; //animation delay: knight
+	int sInitial = 0; //initial x position of every frame: samurai
+	int sEvent = 1; //idle: samurai
+	int sAnimDel = 8; //animation delay: samurai
 	//---------// - PLACEHOLDER
 
 	while (window.isRunning()) {
@@ -217,8 +217,8 @@ int characterSelection(int argc, char** argv)
 		char1.draw();
 		char2.draw();
 
-		knight.drawKnight(a, b, c);
-		samurai.drawSamurai(aa, bb, cc);
+		knight.drawKnight(kInitial, kEvent, kAnimDel);
+		samurai.drawSamurai(sInitial, sEvent, sAnimDel);
 
 		arrBtn.draw();
 
