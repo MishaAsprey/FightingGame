@@ -92,8 +92,8 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 	Hurtbox hurtBoxPlayerOne(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
 	Hurtbox hurtBoxPlayerTwo(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
 
-	std::cout << hurtBoxPlayerOne.getXpos() << std::endl;
-	std::cout << hurtBoxPlayerTwo.getXpos() << std::endl;
+	//std::cout << hurtBoxPlayerOne.getXpos() << std::endl;
+	//std::cout << hurtBoxPlayerTwo.getXpos() << std::endl;
 
 	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
 	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
@@ -178,6 +178,8 @@ int characterSelection(int argc, char** argv)
 
 	int buttonCentrePos = window.getWidth() / 2 - 128;
 
+	window.setWindowTexture("Assets/backgroundCharSel.png");
+
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 
@@ -188,12 +190,24 @@ int characterSelection(int argc, char** argv)
 
 	Player knight(window.getWidth() / 2, window.getHeight() / 2,
 		"Assets/knight.png", SDL_FLIP_NONE, Character::knight, 0);
-	Player samurai(window.getWidth() / 2, window.getHeight() / 2,
+	Player samurai(window.getWidth() / 2 - 500, window.getHeight() / 2 - 500,
 		"Assets/samurai.png", SDL_FLIP_NONE, Character::samurai, 0);
+
+	knight.setSize(2);
+	samurai.setSize(2);
 
 	int playerSelecting = 0;
 	Character playerOne = Character::knight;
 	Character playerTwo = Character::knight;
+
+	//---------// - PLACEHOLDER
+	int a = 60;
+	int b = 1;
+	int c = 5;
+	int aa = 0;
+	int bb = 1;
+	int cc = 8;
+	//---------// - PLACEHOLDER
 
 	while (window.isRunning()) {
 		frameStart = SDL_GetTicks();
@@ -202,6 +216,9 @@ int characterSelection(int argc, char** argv)
 
 		char1.draw();
 		char2.draw();
+
+		knight.drawKnight(a, b, c);
+		samurai.drawSamurai(aa, bb, cc);
 
 		arrBtn.draw();
 

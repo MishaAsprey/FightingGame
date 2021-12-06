@@ -27,6 +27,10 @@ public:
 	void move(Window &window);
 	void takeHit(Character character, int damage, Player& player);
 
+	void setSize(int sizeMultiplier) {
+		_size = sizeMultiplier;
+	}
+
 	inline int getXpos() const { return _xPos; }
 	inline int getYpos() const { return _yPos; }
 	inline bool isRunning() const { return _running; }
@@ -42,6 +46,8 @@ private:
 	bool _attack;
 	int _eventID;
 	int _playerID;
+
+	int _size;
 
 	int _health = 0;
 	int _damage = 0;

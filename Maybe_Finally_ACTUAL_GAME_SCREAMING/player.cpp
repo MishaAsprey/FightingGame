@@ -2,7 +2,7 @@
 
 Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, Character character, int playerID)
 	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0),
-	  _flip(flip), _character(character), _playerID(playerID)
+	  _flip(flip), _character(character), _playerID(playerID), _size(1)
 {
 	switch (character) {
 	case Character::knight:
@@ -74,7 +74,7 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 	}
 
 	SDL_Rect srcrect { x, y, 70, 70 };
-	SDL_Rect dstrect { _xPos, _yPos, 200, 200 };
+	SDL_Rect dstrect { _xPos, _yPos, 200 * _size, 200 * _size };
 	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
@@ -118,7 +118,7 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 	}
 
 	SDL_Rect srcrect { x, y, 200, 200 };
-	SDL_Rect dstrect { _xPos, _yPos + 13, 600, 600 };
+	SDL_Rect dstrect { _xPos, _yPos + 13, 600 * _size, 600 * _size };
 	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
