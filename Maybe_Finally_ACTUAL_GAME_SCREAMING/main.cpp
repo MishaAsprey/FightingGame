@@ -198,19 +198,24 @@ int characterSelection(int argc, char** argv)
 
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
+	Button buttonSelect(buttonCentrePos, 600, "Assets/ButtonSelect.png");
 
-	ArrowButton arrBtn(300, 300, "Assets/swordArrow.png");
+	ArrowButton arrBtnR(600, 600, "Assets/swordArrow.png", false);
+	ArrowButton arrBtnL(300, 300, "Assets/swordArrow.png", true);
 
 	//Knight knight(window.getWidth() / 2, window.getHeight() / 2, "Assets/knight.png");
 	//Samurai samurai(window.getWidth() / 2, window.getHeight() / 2, "Assets/samurai.png");
 
-	Player knight(window.getWidth() / 2, window.getHeight() / 2,
+	Player knight(window.getWidth() / 2 - 180, window.getHeight() / 2 - 400,
 		"Assets/knight.png", SDL_FLIP_NONE, Character::knight, 0);
-	Player samurai(window.getWidth() / 2 - 500, window.getHeight() / 2 - 500,
+	Player samurai(window.getWidth() / 2 - 600, window.getHeight() / 2 - 787,
 		"Assets/samurai.png", SDL_FLIP_NONE, Character::samurai, 0);
+	Player huntress(window.getWidth() / 2 - 600, window.getHeight() / 2 - 791,
+		"Assets/huntress.png", SDL_FLIP_NONE, Character::huntress, 0);
 
 	knight.setSize(2);
 	samurai.setSize(2);
+	huntress.setSize(2);
 
 	int playerSelecting = 0;
 	Character playerOne = Character::knight;
@@ -218,12 +223,13 @@ int characterSelection(int argc, char** argv)
 
 	//---------// - PLACEHOLDER
 	int kInitial = 60; //initial x position of every frame: knight
-	Event kEvent = Event::idle; //idle: knight
 	int kAnimDel = 5; //animation delay: knight
 	int sInitial = 0; //initial x position of every frame: samurai
-	Event sEvent = Event::idle; //idle: samurai
 	int sAnimDel = 8; //animation delay: samurai
+	int hInitial = 0;
+	int hAnimDel = 6;
 	//---------// - PLACEHOLDER
+	Event idle = Event::idle;
 
 	while (window.isRunning()) {
 		frameStart = SDL_GetTicks();
@@ -232,11 +238,14 @@ int characterSelection(int argc, char** argv)
 
 		char1.draw();
 		char2.draw();
+		buttonSelect.draw();
 
-		knight.drawKnight(kInitial, kEvent, kAnimDel);
-		samurai.drawSamurai(sInitial, sEvent, sAnimDel);
+		knight.drawKnight(kInitial, idle, kAnimDel);
+		samurai.drawSamurai(sInitial, idle, sAnimDel);
+		huntress.drawHuntress(hInitial, idle, hAnimDel);
 
-		arrBtn.draw();
+		arrBtnL.draw();
+		arrBtnR.draw();
 
 		if (SDL_PollEvent(&event)) {
 			if (char1.pollEvents(event) && playerSelecting == 0) {
@@ -257,7 +266,8 @@ int characterSelection(int argc, char** argv)
 				playerSelecting++;
 			}
 
-			arrBtn.pollEvents(event);
+			arrBtnL.pollEvents(event);
+			arrBtnR.pollEvents(event);
 		}
 		window.clear();
 

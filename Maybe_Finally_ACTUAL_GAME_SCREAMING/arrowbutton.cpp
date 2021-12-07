@@ -1,7 +1,11 @@
 #include "ArrowButton.h"
 
-ArrowButton::ArrowButton(int xPos, int yPos, const char * texture)
+ArrowButton::ArrowButton(int xPos, int yPos, const char * texture, bool flip)
 {
+	if (!flip)
+		_flip = SDL_FLIP_NONE;
+	else
+		_flip = SDL_FLIP_HORIZONTAL;
 	_xPos = xPos;
 	_yPos = yPos;
 	_overButton = false;
@@ -44,5 +48,6 @@ void ArrowButton::draw() const
 
 	SDL_Rect srcrect{ 0, y, 59, 18 };
 	SDL_Rect dstrect{ _xPos, _yPos, 59 * 6, 18 * 6 };
-	SDL_RenderCopy(Window::renderer, _bTexture, &srcrect, &dstrect);
+	SDL_RenderCopyEx(Window::renderer, _bTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
+
 }
