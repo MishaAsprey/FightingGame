@@ -32,11 +32,13 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 
 	int kx = 60; //90-21; //initial x for knight sprite
 	int sx = sInitial; //initial x for samurai sprite
+	int hx = 0; //initial x for huntress sprite
 	int kAnimDel = 0; //animation delay: knight
 	int sAnimDel = 0; //animation delay: samurai
 
 	const char * knightTexture = "Assets/knight.png";
 	const char * samuraiTexture = "Assets/samurai.png";
+	const char * huntressTexture = "Assets/huntress.png";
 
 	const char * playerOneTexture = "";
 	int pOneXPos = 0;
@@ -65,6 +67,13 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 		pOneInX = sx;
 		pOneAnimDel = sAnimDel;
 		break;
+	case Character::huntress:
+		playerOneTexture = huntressTexture;
+		pOneXPos = 50;
+		pOneYPos = window.getHeight() - 550;
+		pOneInX = hx;
+		pOneAnimDel = sAnimDel;
+		break;
 	default: break;
 	}
 
@@ -81,6 +90,13 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 		pTwoXpos = window.getWidth() - 600;
 		pTwoYPos = window.getHeight() - 550;
 		pTwoInX = sx;
+		pTwoAnimDel = sAnimDel;
+		break;
+	case Character::huntress:
+		playerTwoTexture = huntressTexture;
+		pTwoXpos = window.getWidth() - 600;
+		pTwoYPos = window.getHeight() - 550;
+		pTwoInX = hx;
 		pTwoAnimDel = sAnimDel;
 		break;
 	default: break;
@@ -224,11 +240,11 @@ int characterSelection(int argc, char** argv)
 
 		if (SDL_PollEvent(&event)) {
 			if (char1.pollEvents(event) && playerSelecting == 0) {
-				playerOne = Character::knight;
+				playerOne = Character::huntress;
 				playerSelecting++;
 			}
 			else if (char1.pollEvents(event) && playerSelecting == 1) {
-				playerTwo = Character::knight;
+				playerTwo = Character::huntress;
 				playerSelecting++;
 			}
 

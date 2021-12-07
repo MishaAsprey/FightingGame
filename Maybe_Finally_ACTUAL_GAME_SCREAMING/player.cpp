@@ -32,6 +32,8 @@ void Player::draw(int &x, Event &saveEvent, int &animDelay)
 		drawKnight(x, saveEvent, animDelay);
 	else if (_character == Character::samurai)
 		drawSamurai(x, saveEvent, animDelay);
+	else if (_character == Character::huntress)
+		drawHuntress(x, saveEvent, animDelay);
 }
 
 void Player::drawKnight(int &x, Event &saveEvent, int &animDelay)
@@ -119,6 +121,50 @@ void Player::drawSamurai(int &x, Event &saveEvent, int &animDelay)
 
 	SDL_Rect srcrect { x, y, 200, 200 };
 	SDL_Rect dstrect { _xPos, _yPos + 13, 600 * _size, 600 * _size };
+	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
+}
+
+void Player::drawHuntress(int &x, Event &saveEvent, int &animDelay)
+{
+	int initial = 0; //initial x position for the Samurai sprite
+
+	if (saveEvent != getEventID()) {
+		x = initial;
+		saveEvent = getEventID();
+	}
+
+	if (animDelay >= 6) { //animation delay for Samurai
+		x += 150;
+
+		int limit = 1200;
+		if (isRunning())
+			limit = 1200;
+		else if (attack())
+			limit = 750;
+
+		if (x >= limit) {
+			x = initial; //90-21
+		}
+		animDelay = 0;
+	}
+
+	animDelay++;
+
+	_running = false;
+	int y = 0;
+
+	if (_velx != 0)
+		y = 150 - 4; //200
+	else if (_attack)
+		y = 300;
+
+	if (_eventID == Event::attack && x >= 600) {
+		_attack = false; ///////////////////////////////
+		_eventID = Event::idle;
+	}
+
+	SDL_Rect srcrect{ x, y, 150, 150 };
+	SDL_Rect dstrect{ _xPos, _yPos + 9, 600 * _size, 600 * _size };
 	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
@@ -210,6 +256,10 @@ void Player::move(Window &window)
 	else if (_character == Character::samurai) {
 		rightWall = window.getWidth() - 400;
 		leftWall = -200;
+	}
+	else if (_character == Character::huntress) {
+		rightWall = window.getWidth() - 170 - 300;
+		leftWall = -170;
 	}
 
 	_xPos += _velx;

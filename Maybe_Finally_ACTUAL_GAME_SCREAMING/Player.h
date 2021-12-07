@@ -8,7 +8,7 @@
 
 enum class Character
 {
-	knight, samurai
+	knight, samurai, huntress
 };
 
 enum class Event
@@ -26,6 +26,7 @@ public:
 
 	void drawKnight(int &x, Event &saveEvent, int &animDelay);
 	void drawSamurai(int &x, Event &saveEvent, int &animDelay);
+	void drawHuntress(int &x, Event &saveEvent, int &animDelay);
 
 	void pollEventsP1(SDL_Event &event);
 	void pollEventsP2(SDL_Event &event);
