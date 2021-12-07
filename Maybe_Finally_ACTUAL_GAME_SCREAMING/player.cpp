@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, Character character, int playerID)
-	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(0),
+	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(Event::idle),
 	  _flip(flip), _character(character), _playerID(playerID), _size(1)
 {
 	switch (character) {
@@ -26,7 +26,7 @@ Player::~Player()
 	SDL_DestroyTexture(_pTexture);
 }
 
-void Player::draw(int &x, int &saveEvent, int &animDelay)
+void Player::draw(int &x, Event &saveEvent, int &animDelay)
 {
 	if (_character == Character::knight)
 		drawKnight(x, saveEvent, animDelay);
@@ -34,7 +34,7 @@ void Player::draw(int &x, int &saveEvent, int &animDelay)
 		drawSamurai(x, saveEvent, animDelay);
 }
 
-void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
+void Player::drawKnight(int &x, Event &saveEvent, int &animDelay)
 {
 	if (saveEvent != getEventID()) {
 		x = 60;
@@ -68,9 +68,9 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 	else if (_attack) {
 		y = 230 + 1; //245
 	}
-	if (_eventID == 3 && x >= 1100) {
+	if (_eventID == Event::attack && x >= 1100) {
 		_attack = false; ///////////////////////////////
-		_eventID = 0;
+		_eventID = Event::idle;
 	}
 
 	SDL_Rect srcrect { x, y, 70, 70 };
@@ -78,7 +78,7 @@ void Player::drawKnight(int &x, int &saveEvent, int &animDelay)
 	SDL_RenderCopyEx(Window::renderer, _pTexture, &srcrect, &dstrect, NULL, nullptr, _flip);
 }
 
-void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
+void Player::drawSamurai(int &x, Event &saveEvent, int &animDelay)
 {
 	int initial = 0; //initial x position for the Samurai sprite
 
@@ -112,9 +112,9 @@ void Player::drawSamurai(int &x, int &saveEvent, int &animDelay)
 	else if (_attack)
 		y = 400 + 8;
 
-	if (_eventID == 3 && x >= 600) {
+	if (_eventID == Event::attack && x >= 600) {
 		_attack = false; ///////////////////////////////
-		_eventID = 0;
+		_eventID = Event::idle;
 	}
 
 	SDL_Rect srcrect { x, y, 200, 200 };
@@ -140,22 +140,22 @@ void Player::pollEventsP1(SDL_Event &event)
 	const Uint8 * keyState = SDL_GetKeyboardState(NULL);
 
 	if (keyState[SDL_SCANCODE_D]) {
-		_eventID = 1;
+		_eventID = Event::idle;
 		_velx = 7;
 		_flip = SDL_FLIP_NONE;
 	}
 	else if (keyState[SDL_SCANCODE_A]) {
-		_eventID = 2;
+		_eventID = Event::run;
 		_velx = -7;
 		_flip = SDL_FLIP_HORIZONTAL;
 	}
 	else if (keyState[SDL_SCANCODE_SPACE]) {
-		_eventID = 3;
+		_eventID = Event::attack;
 		_velx = 0;
 		_attack = true;
 	}
 	else {
-		_eventID = 0;
+		_eventID = Event::idle;
 		_velx = 0;
 		_attack = false;
 	}
@@ -168,22 +168,22 @@ void Player::pollEventsP2(SDL_Event &event)
 	const Uint8 * keyState = SDL_GetKeyboardState(NULL);
 
 	if (keyState[SDL_SCANCODE_RIGHT]) {
-		_eventID = 1;
+		_eventID = Event::idle;
 		_velx = 7;
 		_flip = SDL_FLIP_NONE;
 	}
 	else if (keyState[SDL_SCANCODE_LEFT]) {
-		_eventID = 2;
+		_eventID = Event::run;
 		_velx = -7;
 		_flip = SDL_FLIP_HORIZONTAL;
 	}
 	else if (keyState[SDL_SCANCODE_R]) {
-		_eventID = 3;
+		_eventID = Event::attack;
 		_velx = 0;
 		_attack = true;
 	}
 	else {
-		_eventID = 0;
+		_eventID = Event::idle;
 		_velx = 0;
 		_attack = false;
 	}

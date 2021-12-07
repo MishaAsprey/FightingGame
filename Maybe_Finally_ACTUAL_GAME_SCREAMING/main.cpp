@@ -95,8 +95,8 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 	//std::cout << hurtBoxPlayerOne.getXpos() << std::endl;
 	//std::cout << hurtBoxPlayerTwo.getXpos() << std::endl;
 
-	int pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
-	int pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
+	Event pOneSaveEvent = playerOne.getEventID(); //Save player 1's last event
+	Event pTwoSaveEvent = playerTwo.getEventID(); //Save player 2's last event
 
 	//Hitbox hitbox(playerOneSel, 0);
 
@@ -105,13 +105,13 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 
 		window.draw();
 
-		if (playerOne.getEventID() == 3) {
+		if (playerOne.getEventID() == Event::attack) {
 			Hitbox hitbox1(playerOneSel, 0, playerOne.getXpos(), playerOne.getYpos(), playerOne.getFlip());
 			hitbox1.draw();
 			if (hurtBoxPlayerTwo.collide(hitbox1))
 				playerTwo.takeHit(playerTwoSel, playerOne.getDamage(), playerTwo);
 		}
-		if (playerTwo.getEventID() == 3) {
+		if (playerTwo.getEventID() == Event::attack) {
 			Hitbox hitbox2(playerTwoSel, 1, playerTwo.getXpos(), playerTwo.getYpos(), playerTwo.getFlip());
 			hitbox2.draw();
 			if (hurtBoxPlayerOne.collide(hitbox2))
@@ -202,10 +202,10 @@ int characterSelection(int argc, char** argv)
 
 	//---------// - PLACEHOLDER
 	int kInitial = 60; //initial x position of every frame: knight
-	int kEvent = 1; //idle: knight
+	Event kEvent = Event::idle; //idle: knight
 	int kAnimDel = 5; //animation delay: knight
 	int sInitial = 0; //initial x position of every frame: samurai
-	int sEvent = 1; //idle: samurai
+	Event sEvent = Event::idle; //idle: samurai
 	int sAnimDel = 8; //animation delay: samurai
 	//---------// - PLACEHOLDER
 
