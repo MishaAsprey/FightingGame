@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Hitbox.h"
 #include "Hurtbox.h"
+#include "Charbackground.h"
 
 SDL_Event event;
 
@@ -199,14 +200,17 @@ int characterSelection(int argc, char** argv)
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 	Button buttonSelect(buttonCentrePos, 600, "Assets/ButtonSelect.png");
+	Button buttonBack(buttonCentrePos, 800, "Assets/ButtonQuit.png");
 
-	ArrowButton arrBtnR(600, 600, "Assets/swordArrow.png", false);
-	ArrowButton arrBtnL(300, 300, "Assets/swordArrow.png", true);
+	ArrowButton arrBtnR(window.getWidth() - 400 - 59 * 6, 350, "Assets/swordArrow.png", false);
+	ArrowButton arrBtnL(400, 350, "Assets/swordArrow.png", true);
 
 	//Knight knight(window.getWidth() / 2, window.getHeight() / 2, "Assets/knight.png");
 	//Samurai samurai(window.getWidth() / 2, window.getHeight() / 2, "Assets/samurai.png");
 
-	Player knight(window.getWidth() / 2 - 180, window.getHeight() / 2 - 400,
+	CharBG charBG(window.getWidth() / 2 - 32 * 6, 120);
+
+	Player knight(window.getWidth() / 2 - 180 - 20, window.getHeight() / 2 - 400,
 		"Assets/knight.png", SDL_FLIP_NONE, Character::knight, 0);
 	Player samurai(window.getWidth() / 2 - 600, window.getHeight() / 2 - 787,
 		"Assets/samurai.png", SDL_FLIP_NONE, Character::samurai, 0);
@@ -220,6 +224,10 @@ int characterSelection(int argc, char** argv)
 	int playerSelecting = 0;
 	Character playerOne = Character::knight;
 	Character playerTwo = Character::knight;
+
+	int scroll = 0;
+	Character characters[] = { Character::knight, Character::samurai, Character::huntress };
+	int numberOfElems = sizeof(characters) / sizeof(characters[0]) - 1;
 
 	//---------// - PLACEHOLDER
 	int kInitial = 60; //initial x position of every frame: knight
@@ -236,38 +244,57 @@ int characterSelection(int argc, char** argv)
 
 		window.draw();
 
-		char1.draw();
-		char2.draw();
-		buttonSelect.draw();
+		//char1.draw();
+		//char2.draw();
 
-		knight.drawKnight(kInitial, idle, kAnimDel);
-		samurai.drawSamurai(sInitial, idle, sAnimDel);
-		huntress.drawHuntress(hInitial, idle, hAnimDel);
+		charBG.draw();
+
+		buttonSelect.draw();
+		buttonBack.draw();
+
+		Character currChar = characters[scroll];
+
+		if (currChar == Character::knight)
+			knight.drawKnight(kInitial, idle, kAnimDel);
+		else if (currChar == Character::samurai)
+			samurai.drawSamurai(sInitial, idle, sAnimDel);
+		else if (currChar == Character::huntress)
+			huntress.drawHuntress(hInitial, idle, hAnimDel);
+
+		//knight.drawKnight(kInitial, idle, kAnimDel);
+		//samurai.drawSamurai(sInitial, idle, sAnimDel);
+		//huntress.drawHuntress(hInitial, idle, hAnimDel);
 
 		arrBtnL.draw();
 		arrBtnR.draw();
 
 		if (SDL_PollEvent(&event)) {
-			if (char1.pollEvents(event) && playerSelecting == 0) {
-				playerOne = Character::huntress;
-				playerSelecting++;
+			if (buttonBack.pollEvents(event)) {
+				window.setCurWindow(Window::CurrWindow::mainMenu);
+				return mainMenu(argc, argv);
 			}
-			else if (char1.pollEvents(event) && playerSelecting == 1) {
-				playerTwo = Character::huntress;
-				playerSelecting++;
+			if (arrBtnL.pollEvents(event)) {
+				if (scroll <= 0)
+					scroll = numberOfElems;
+				else
+					scroll--;
 			}
-
-			if (char2.pollEvents(event) && playerSelecting == 0) {
-				playerOne = Character::samurai;
-				playerSelecting++;
+			if (arrBtnR.pollEvents(event)) {
+				if (scroll >= numberOfElems)
+					scroll = 0;
+				else
+					scroll++;
 			}
-			else if (char2.pollEvents(event) && playerSelecting == 1) {
-				playerTwo = Character::samurai;
-				playerSelecting++;
+			if (buttonSelect.pollEvents(event)) {
+				if (playerSelecting == 0) {
+					playerOne = currChar;
+					playerSelecting++;
+				}
+				else {
+					playerTwo = currChar;
+					playerSelecting++;
+				}
 			}
-
-			arrBtnL.pollEvents(event);
-			arrBtnR.pollEvents(event);
 		}
 		window.clear();
 

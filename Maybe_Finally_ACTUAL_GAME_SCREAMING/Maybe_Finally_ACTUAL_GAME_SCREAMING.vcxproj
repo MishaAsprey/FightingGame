@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="arrowbutton.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="charbackground.cpp" />
     <ClCompile Include="collider.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="hitbox.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="ArrowButton.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Charbackground.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Hitbox.h" />
