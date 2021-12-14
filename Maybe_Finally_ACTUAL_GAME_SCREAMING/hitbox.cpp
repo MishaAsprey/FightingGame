@@ -31,12 +31,12 @@ Hitbox::Hitbox(Character character, int playerID, int currXpos, int currYpos, SD
 	case Character::huntress:
 		switch (flip) {
 		case SDL_FLIP_NONE:
-			_xPos = currXpos; break;
+			_xPos = currXpos + 305; break;
 		case SDL_FLIP_HORIZONTAL:
-			_xPos = currXpos; break;
+			_xPos = currXpos + 95; break;
 		default: break;
 		}
-		_yPos = currYpos + 100;
+		_yPos = currYpos + 200;
 		_width = 200;
 		_length = 200;
 	default: break;

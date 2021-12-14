@@ -7,11 +7,15 @@ Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, 
 	switch (character) {
 	case Character::knight:
 		_health = 100;
-		_damage = 30;
+		_damage = 40;
 		break;
 	case Character::samurai:
 		_health = 70;
 		_damage = 30;
+		break;
+	case Character::huntress:
+		_health = 80;
+		_damage = 40;
 		break;
 	default: break;
 	}
