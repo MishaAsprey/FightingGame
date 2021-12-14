@@ -15,9 +15,6 @@ public:
 	void draw() const;
 	void pollEvents(SDL_Event &event);
 	void move();
-	
-	//int health;
-	//int damage;
 
 protected:
 	int _x, _y, _w, _h;
