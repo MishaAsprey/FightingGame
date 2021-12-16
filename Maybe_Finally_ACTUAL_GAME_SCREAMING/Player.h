@@ -13,7 +13,7 @@ enum class Character
 
 enum class Event
 {
-	idle, run, attack
+	idle, run, attack, attackTwo, takeHit, death
 };
 
 class Player : public Hero
@@ -45,6 +45,7 @@ public:
 	inline int getHealth() const { return _health; }
 	inline int getDamage() const { return _damage; }
 	inline SDL_RendererFlip getFlip() const { return _flip; }
+	inline bool isAlive() const { return _alive; }
 
 private:
 	int _xPos, _yPos;
@@ -52,6 +53,8 @@ private:
 	bool _attack;
 	Event _eventID;
 	int _playerID;
+
+	bool _alive;
 
 	int _size;
 

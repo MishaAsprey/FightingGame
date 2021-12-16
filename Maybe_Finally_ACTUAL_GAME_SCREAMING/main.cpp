@@ -158,9 +158,9 @@ int gameLoop(int argc, char** argv, Character playerOneSel, Character playerTwoS
 		//}
 
 		if (SDL_PollEvent(&event)) {
-			if (!playerOne.attack())
+			if (!playerOne.attack() && playerOne.getEventID() != Event::death)
 				playerOne.pollEventsP1(event);
-			if (!playerTwo.attack())
+			if (!playerTwo.attack() && playerTwo.getEventID() != Event::death)
 				playerTwo.pollEventsP2(event);
 			window.pollEvents(event);
 		}

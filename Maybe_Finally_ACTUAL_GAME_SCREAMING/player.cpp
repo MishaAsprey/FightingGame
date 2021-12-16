@@ -2,7 +2,7 @@
 
 Player::Player(int xPos, int yPos, const char * texture, SDL_RendererFlip flip, Character character, int playerID)
 	: _xPos(xPos), _yPos(yPos), _running(false), _attack(false), _eventID(Event::idle),
-	  _flip(flip), _character(character), _playerID(playerID), _size(1)
+	  _flip(flip), _character(character), _playerID(playerID), _size(1), _alive(true)
 {
 	switch (character) {
 	case Character::knight:
@@ -48,15 +48,17 @@ void Player::drawKnight(int &x, Event &saveEvent, int &animDelay)
 	}
 
 	if (animDelay >= 5) { //animation delay for Knight
-		x += 180;
+		x += 180 * ((_eventID == Event::death && x >= 1800) ? 0 : 1);
 
 		int limit = 1800;
 		if (isRunning())
 			limit = 1440;
 		else if (attack())
 			limit = 1260;
+		else if (_eventID == Event::death)
+			limit = 1980;
 
-		if (x >= limit) {
+		if (x >= limit && _eventID != Event::death) {
 			x = 60; //90-21
 		}
 		animDelay = 0;
@@ -71,12 +73,15 @@ void Player::drawKnight(int &x, Event &saveEvent, int &animDelay)
 		y = 145; //160 - 15
 		_running = true;
 	}
+	else if (_eventID == Event::attack && x >= 1100) {
+		_attack = false; ///////////////////////////////
+		_eventID = Event::idle;
+	}
 	else if (_attack) {
 		y = 230 + 1; //245
 	}
-	if (_eventID == Event::attack && x >= 1100) {
-		_attack = false; ///////////////////////////////
-		_eventID = Event::idle;
+	if (_eventID == Event::death) { //////////////////////////////
+		y = 230 + 180 + 180 + 180 - 5;
 	}
 
 	SDL_Rect srcrect { x, y, 70, 70 };
@@ -244,7 +249,8 @@ void Player::takeHit(Character character, int damage, Player &player)
 	_health -= damage;
 
 	if (_health <= 0) {
-		player.~Player(); //player death
+		_eventID = Event::death;
+		//player.~Player(); //player death
 	}
 }
 
