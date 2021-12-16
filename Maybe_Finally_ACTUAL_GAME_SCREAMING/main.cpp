@@ -200,7 +200,7 @@ int characterSelection(int argc, char** argv)
 	Button char1(buttonCentrePos, 200, "Assets/ButtonStart.png");
 	Button char2(buttonCentrePos, 400, "Assets/ButtonHelp.png");
 	Button buttonSelect(buttonCentrePos, 600, "Assets/ButtonSelect.png");
-	Button buttonBack(buttonCentrePos, 800, "Assets/ButtonQuit.png");
+	Button buttonBack(buttonCentrePos, 800, "Assets/ButtonBack.png");
 
 	ArrowButton arrBtnR(window.getWidth() - 400 - 59 * 6, 350, "Assets/swordArrow.png", false);
 	ArrowButton arrBtnL(400, 350, "Assets/swordArrow.png", true);
@@ -371,7 +371,7 @@ int helpScreen(int argc, char** argv)
 {
 	int buttonCentrePos = window.getWidth() / 2 - 128;
 
-	Button buttonBack(buttonCentrePos, 600, "Assets/ButtonHelp.png");
+	Button buttonBack(buttonCentrePos, 600, "Assets/ButtonBack.png");
 
 	while (window.isRunning()) {
 		window.draw();
